@@ -132,8 +132,12 @@ class RouteConfig {
 				$verb = $action['verb'];
 				$collectionAction = isset($action['on-collection']) ? $action['on-collection'] : false;
 				if (!$collectionAction) {
-					if ( isset($config['param']) ) {
-						$url = $url . '/{' . $config['param'] . '}';
+					if ( isset($config['params']) ) {
+						$params = explode('/', $config['params']);
+						foreach ($params as $param) {
+							$url = $url . "/{$param}";
+						};
+						
 					} else {
 						$url = $url . '/' . $resourceId;
 					}
