@@ -116,7 +116,6 @@ class RouteConfig {
 		$actions = array(
 			array('name' => 'index', 'verb' => 'GET', 'on-collection' => true),
 			array('name' => 'show', 'verb' => 'GET'),
-			array('name' => 'new', 'verb' => 'GET', 'on-collection' => true, 'url-postfix' => 'new'),
 			array('name' => 'create', 'verb' => 'POST', 'on-collection' => true),
 			array('name' => 'update', 'verb' => 'PUT'),
 			array('name' => 'destroy', 'verb' => 'DELETE'),
@@ -130,13 +129,14 @@ class RouteConfig {
 			foreach($actions as $action) {
 				$url = $config['url'];
 				$method = $action['name'];
-				$verb = isset($action['verb']) ? strtoupper($action['verb']) : 'GET';
+				$verb = $action['verb'];
 				$collectionAction = isset($action['on-collection']) ? $action['on-collection'] : false;
 				if (!$collectionAction) {
-					$url = $url . '/' . $resourceId;
-				}
-				if (isset($action['url-postfix'])) {
-					$url = $url . '/' . $action['url-postfix'];
+					if ( isset($config['param']) ) {
+						$url = $url . '/{' . $config['param'] . '}';
+					} else {
+						$url = $url . '/' . $resourceId;
+					}
 				}
 
 				$controller = $resource;
