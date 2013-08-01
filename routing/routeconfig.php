@@ -135,7 +135,7 @@ class RouteConfig {
 					if ( isset($config['params']) ) {
 						$params = explode('/', $config['params']);
 						foreach ($params as $param) {
-							$url = $url . "/{$param}";
+							$url = $url . "/{" . $param . "}";
 						};
 						
 					} else {
